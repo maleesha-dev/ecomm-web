@@ -17,36 +17,40 @@ public class Test extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.getWriter().write("E-comm Web module test.<br>");
+        resp.getWriter().write("E-comm Web module Test<br>");
+
 
         try {
 
             TestRemote tr;
-            InitialContext ic = new InitialContext();
-            tr = (TestRemote) ic.lookup("java:global/ecomm-user-1.0/TestSessionBean");
-
-//            HttpSession session = req.getSession();
-//            if (session.getAttribute("testBean") == null) {
-//
-//                session.setAttribute("testBean", tr);
-//            }else {
-//                tr = (TestRemote) session.getAttribute("testBean");
-//            }
+            //InitialContext ic = new InitialContext();
+            //tr = (TestRemote) ic.lookup("java:global/ecomm-user-1.0/TestSessionBean");
+            HttpSession session = req.getSession();
+            if (session.getAttribute("testBean") == null) {
+                InitialContext ic = new InitialContext();
+                tr = (TestRemote) ic.lookup("java:global/ecomm-user-1.0/TestSessionBean");
+                session.setAttribute("testBean", tr);
+            } else {
+                tr = (TestRemote) session.getAttribute("testBean");
+            }
 
 
             String test = tr.test();
-            resp.getWriter().write("Result" + test);
+            resp.getWriter().write("Result: " + test);
 
-            // Session , Application
+
+            // Session, Application
 
 
 //            List<UserDTO> allUsers = userRemote.getAllUsers();
 //            for (UserDTO user : allUsers) {
-//                user.toString();
+//               user.toString();
 //            }
+
 
         } catch (NamingException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
