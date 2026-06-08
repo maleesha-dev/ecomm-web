@@ -14,25 +14,25 @@
     <title>Title</title>
 </head>
 <body>
+<%!
+    // @EJB
+    // private TestRemote testRemote;
+%>
+<h1>Index Page!</h1>
 
-    <%!
-//        @EJB
-//        private TestRemote testRemote;
-    %>
-    <h1>Index Page..</h1>
+<%
 
+    try {
 
+        InitialContext ic = new InitialContext();
+        TestRemote tr = (TestRemote) ic.lookup("java:global/ecomm-user-1.0/TestSessionBean");
+        tr.test();
 
-    <%
-        try{
+    } catch (NamingException e) {
+        throw new RuntimeException(e);
+    }
 
-            InitialContext ic = new InitialContext();
-            TestRemote tr = (TestRemote) ic.lookup("java:global/ecomm-user-1.0/TestSessionBean");
-            tr.test();
+%>
 
-        }catch (NamingException e){
-            throw new RuntimeException(e);
-        }
-    %>
 </body>
 </html>
