@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.novasphere.ecomm.ejb.remote.AppSetting;
 
 import java.io.IOException;
 
@@ -16,8 +17,9 @@ public class Test extends HttpServlet {
 //    @EJB(lookup = "java:global/ecomm-user-1.0/TestNewSessionBean")
 //    private TestRemote testRemote;
 //
-//    @EJB
-//    private AppSetting appSetting;
+
+    @EJB
+    private AppSetting appSetting;
 
     @Inject
     private MyApp myApp;
@@ -35,9 +37,9 @@ public class Test extends HttpServlet {
 
         // req.getSession();
 
-        myApp.doSomething();
+//        myApp.doSomething();
 
-        // resp.getWriter().write("App Name: "+appSetting.getName());
+         resp.getWriter().write("App Name: " + appSetting.getName());
 
 
     }
